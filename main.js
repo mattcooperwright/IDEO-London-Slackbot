@@ -12,7 +12,7 @@ Parse.Cloud.define("zendrive_webhook", function(request, response) {
     /* Slack */
     Parse.Cloud.httpRequest({
         method: 'POST',
-        url: 'ADD_YOUR_INCOMING_SLACK_URI_HERE',
+        url: 'ADD_YOUR_INCOMING_SLACK_URL_HERE',
         headers: {
             'Content-Type': 'application/json'
         },
