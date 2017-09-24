@@ -1,0 +1,85 @@
+{
+  "name": "mattcooperwright/IDEO-London-Slackbot",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "",
+  "branch": "",
+  "style": {
+    "name": "Material",
+    "componentSet": {
+      "nav": "nav/DarkAbsoluteNav",
+      "header": "header/GradientHeader",
+      "article": "article/BasicArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "Roboto, sans-serif",
+    "heading": {
+      "fontWeight": 500,
+      "letterSpacing": "-0.01em"
+    },
+    "colors": {
+      "text": "#212121",
+      "background": "#fff",
+      "primary": "#2196f3",
+      "secondary": "#1565c0",
+      "highlight": "#ff4081",
+      "border": "#e0e0e0",
+      "muted": "#f5f5f5"
+    },
+    "layout": {
+      "centered": true,
+      "bannerHeight": "80vh",
+      "maxWidth": 896
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://github.com/mattcooperwright/IDEO-London-Slackbot",
+          "text": "GitHub"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "IDEO-London-Slackbot",
+      "subhead": "The First Slackbot on our Design Team here in London",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "IDEO-London-Slackbot: The First Slackbot on our Design Team here in London",
+          "url": null
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "mattcooperwright",
+          "repo": "IDEO-London-Slackbot"
+        }
+      ]
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "\n\n<p><em>We&apos;ve been developing semi autonomous helpers for our Design Teams here at IDEO. This is London&apos;s first bot on the design team. Read more about the project here on IDEO Labs: <a href=\"https://labs.ideo.com\">https://labs.ideo.com</a></em></p>\n<h1>How to install / setup your bot</h1>\n<p>These steps are very specifically for anyone wanting to use Zendrive as a trigger, and Parse as the message formatter. (There are probably smarter ways to do this, and originally we had other things triggered and stored in Parse, but the steps below are the bare essentials)</p>\n<ol>\n<li>You&apos;ll need a Zendrive account and a working fleet of drivers recording trips. See the Zendrive site on how to get this running: <a href=\"https://www.zendrive.com/\">https://www.zendrive.com/</a></li>\n<li>You&apos;ll need a Parse installation, this means getting a copy of Parse Server installed somewhere - i&apos;d recommend Heroku: <a href=\"https://devcenter.heroku.com/articles/deploying-a-parse-server-to-heroku\">https://devcenter.heroku.com/articles/deploying-a-parse-server-to-heroku</a></li>\n<li>Figure out your Parse Application&apos;s incoming Webhook (see extra steps below), enter the webhook into you Zendrive Settings page: <a href=\"https://www.zendrive.com/developers/settings/advanced\">https://www.zendrive.com/developers/settings/advanced</a></li>\n<li>Add the code in the main.js file to your Parse &apos;cloud&apos; folder. If you haven&apos;t got any other code in the existing <code>main.js</code> file you can over write <code>main.js</code> with the one in this repo</li>\n<li>Edit the <code>main.js</code> file to include your Slack incoming webhook link (see extra steps below)</li>\n<li>That&apos;s it. you can test it by pasting the snippet below into your terminal window - make sure you replace the application ID and Key with your own from Parse</li>\n</ol>\n<h2>Testing Snippet</h2>\n<p>Note the missing Application ID and API Key in the string, replace this with yours found in your Parse App Settings</p>\n<pre>curl -X <span class=\"hljs-keyword\">POST</span> -<span class=\"hljs-keyword\">H</span> <span class=\"hljs-string\">&quot;X-Parse-Application-Id: [ADDYOURID]&quot;</span> -<span class=\"hljs-keyword\">H</span> <span class=\"hljs-string\">&quot;X-Parse-REST-API-Key: [ADDYOURKEY]&quot;</span> -<span class=\"hljs-keyword\">H</span> <span class=\"hljs-string\">&quot;Content-Type: application/json&quot;</span> -<span class=\"hljs-keyword\">d</span> <span class=\"hljs-string\">&quot;{\\&quot;</span><span class=\"hljs-keyword\">version</span>\\<span class=\"hljs-string\">&quot;:1,\\&quot;</span><span class=\"hljs-keyword\">type</span>\\<span class=\"hljs-string\">&quot;:\\&quot;</span>TRIP_SCORED\\<span class=\"hljs-string\">&quot;,\\&quot;</span>driver_id\\<span class=\"hljs-string\">&quot;:\\&quot;</span>trip_driver\\<span class=\"hljs-string\">&quot;,\\&quot;</span>trip_id\\<span class=\"hljs-string\">&quot;: 1456726828778 }&quot;</span> https:<span class=\"hljs-comment\">//api.parse.com/1/functions/zendrive_webhook</span></pre><h1>Extra steps</h1>\n<p>In case you need them from above</p>\n<h3>Defining your Parse Incoming Webhook address</h3>\n<ol>\n<li>In your Parse Dashboad go to the App Settings page</li>\n<li>Go to Securty &amp; Keys</li>\n<li>Note your Application ID and your JavaScript Key (Keep these safe, they let anyone manpiulate your app!)</li>\n<li>Your incoming link will be: <code>https://APPLICATION_ID:javascript-key=JAVASCRIPT_KEY@api.parse.com/1/functions/zendrive_webhook</code></li>\n<li>Pase this into your Zendrive Dashboard Advanced page &apos;Notifications Webhooks&apos; box</li>\n</ol>\n<h3>Defining your Slack Incoming Webhook address</h3>\n<p><em>Note that you&apos;ll probably need to be the admin and be on a paid Slack plan to do some of this.</em></p>\n<ol>\n<li>Create a new Channel in Slack where your messages will appear</li>\n<li>Go to your Slack group in a browser, go to the Apps and Integrations page </li>\n<li>Click the Build button, then choose &apos;Something just for my team&apos;</li>\n<li>Select Incoming WebHooks</li>\n<li>Set it to the channel you created in step 1</li>\n<li>Copy the Webhook URL from the text box</li>\n<li>Paste the URL into the <code>main.js</code> file</li>\n</ol>\n"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/mattcooperwright/IDEO-London-Slackbot",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/mattcooperwright",
+          "text": "mattcooperwright"
+        }
+      ]
+    }
+  ]
+}
